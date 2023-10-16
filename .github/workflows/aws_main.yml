@@ -33,4 +33,4 @@ jobs:
         - name: Remove previous docker container
           run: docker rm -f limpee_backend
         - name: Run docker container
-          run: docker run -d -p 80:80 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
+          run: docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
