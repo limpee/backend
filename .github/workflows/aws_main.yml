@@ -30,5 +30,7 @@ jobs:
       steps:
         - name: Pull image from Docker Hub
           run: docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
+        - name: Remove previous docker container
+          run: docker rm -f limpee_backend
         - name: Run docker container
           run: docker run -d -p 80:80 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL=${{secrets.DATABASE_URL}} -e JWT_SECRET='${{secrets.JWT_SECRET}}' --name container_back ${{secrets.DOCKER_USERNAME}}/limpee_backend
