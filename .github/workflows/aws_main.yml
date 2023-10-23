@@ -29,6 +29,8 @@ jobs:
     needs: build
     runs-on: [self-hosted, backend-1]
     steps:
+      - name: Login Docker Hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
         run: docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
       - name: Remove previous docker container
@@ -40,6 +42,8 @@ jobs:
     needs: [build, deploy-ec2-backend-1]
     runs-on: [self-hosted, backend-2]
     steps:
+      - name: Login Docker Hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
         run: docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
       - name: Remove previous docker container
