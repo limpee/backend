@@ -30,23 +30,23 @@ jobs:
     runs-on: [self-hosted, backend-1]
     steps:
       - name: Login Docker Hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
-        run: docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
+        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
       - name: Remove previous docker container
-        run: docker rm -f limpee_backend
+        run: sudo docker rm -f limpee_backend
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
+        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
 
   deploy-ec2-backend-2:
     needs: [build, deploy-ec2-backend-1]
     runs-on: [self-hosted, backend-2]
     steps:
       - name: Login Docker Hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
-        run: docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
+        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
       - name: Remove previous docker container
-        run: docker rm -f limpee_backend
+        run: sudo docker rm -f limpee_backend
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
+        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
