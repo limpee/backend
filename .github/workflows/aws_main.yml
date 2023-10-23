@@ -30,7 +30,9 @@ jobs:
     runs-on: [self-hosted, backend-1]
     steps:
       - name: Verificar Usuário
-        run: docker run -it ubuntu whoami
+        run: |
+          user=$(docker run --rm ubuntu whoami)
+          echo "O usuário no contêiner é: $user"
       - name: Login Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
@@ -44,6 +46,10 @@ jobs:
     needs: [build, deploy-ec2-backend-1]
     runs-on: [self-hosted, backend-2]
     steps:
+      - name: Verificar Usuário
+        run: |
+          user=$(docker run --rm ubuntu whoami)
+          echo "O usuário no contêiner é: $user"
       - name: Login Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Pull image from Docker Hub
