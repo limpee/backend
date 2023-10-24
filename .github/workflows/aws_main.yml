@@ -1,52 +1,52 @@
-name: Deploy Backend Application
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '17'
-      - name: Build project
-        run: mvn clean install -DskipTests
-      - name: Login Docker Hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Build docker image
-        run: docker build -t ${{secrets.DOCKER_USERNAME}}/limpee_backend .
-      - name: Push docker image
-        run: docker push ${{secrets.DOCKER_USERNAME}}/limpee_backend
-
-  deploy-ec2-backend-1:
-    needs: build
-    runs-on: [self-hosted, backend-1]
-    steps:
-      - name: Login Docker Hub
-        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Pull image from Docker Hub
-        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
-      - name: Remove previous docker container
-        run: sudo docker rm -f limpee_backend
-      - name: Run docker container
-        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
-
-  deploy-ec2-backend-2:
-    needs: [build, deploy-ec2-backend-1]
-    runs-on: [self-hosted, backend-2]
-    steps:
-      - name: Login Docker Hub
-        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Pull image from Docker Hub
-        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
-      - name: Remove previous docker container
-        run: sudo docker rm -f limpee_backend
-      - name: Run docker container
-        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
+#name: Deploy Backend Application
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'oracle'
+#          java-version: '17'
+#      - name: Build project
+#        run: mvn clean install -DskipTests
+#      - name: Login Docker Hub
+#        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+#      - name: Build docker image
+#        run: docker build -t ${{secrets.DOCKER_USERNAME}}/limpee_backend .
+#      - name: Push docker image
+#        run: docker push ${{secrets.DOCKER_USERNAME}}/limpee_backend
+#
+#  deploy-ec2-backend-1:
+#    needs: build
+#    runs-on: [self-hosted, backend-1]
+#    steps:
+#      - name: Login Docker Hub
+#        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+#      - name: Pull image from Docker Hub
+#        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
+#      - name: Remove previous docker container
+#        run: sudo docker rm -f limpee_backend
+#      - name: Run docker container
+#        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
+#
+#  deploy-ec2-backend-2:
+#    needs: [build, deploy-ec2-backend-1]
+#    runs-on: [self-hosted, backend-2]
+#    steps:
+#      - name: Login Docker Hub
+#        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+#      - name: Pull image from Docker Hub
+#        run: sudo docker pull ${{secrets.DOCKER_USERNAME}}/limpee_backend:latest
+#      - name: Remove previous docker container
+#        run: sudo docker rm -f limpee_backend
+#      - name: Run docker container
+#        run: sudo docker run -d -p 8080:8080 --name limpee_backend -e DATABASE_USERNAME='${{secrets.DATABASE_USERNAME}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL='${{secrets.DATABASE_URL}}' -e JWT_SECRET='${{secrets.JWT_SECRET}}' ${{secrets.DOCKER_USERNAME}}/limpee_backend
