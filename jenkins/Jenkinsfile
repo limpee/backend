@@ -35,7 +35,7 @@ pipeline {
                     //def keyPath = '/path/to/private/key.pem'
                     def keyPath =  '/home/ec2-user/keys/backend-key.pem'
                     //def remoteDir = '~/apl-back-zup'
-                    def remoteDir = '~/ec2-user/repo/backend'
+                    def remoteDir = '~/repo/backend'
 
                     // Altera as permissões da chave
                    // sh "chmod 600 ${keyPath}"
