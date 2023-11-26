@@ -11,11 +11,10 @@ pipeline {
         stage('SSH and Git Commands') {
             steps {
                 script {
-                    // Configuração de SSH
-                    withCredentials([sshUserPrivateKey(credentialsId: SSH_KEY, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                        sh """
+                    {
+                        """
                             cd /home/ec2-user/keys
-                            ssh -i \${SSH_PRIVATE_KEY} \${SSH_USER}@\${REMOTE_SERVER} 'yes'
+                            ssh -i \${SSH_KEY} \${SSH_USER}@\${REMOTE_SERVER}
                             cd /home/ec2-user/repo/backend
                             sudo git fetch
                             sudo git pull
