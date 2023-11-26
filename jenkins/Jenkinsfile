@@ -28,7 +28,7 @@ pipeline {
 
             steps {
 
-                sh "chmod 400 \"backend-key.pem\""
+                sh "chmod 400 /home/ec2-user/keys/backend-key.pem"
 
             }
 
