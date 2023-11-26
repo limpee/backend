@@ -41,7 +41,7 @@ pipeline {
                    // sh "chmod 600 ${keyPath}"
 
                    sh """
-                   ssh -o StrictHostKeyChecking=no -i ${keyPath} ${remoteUser}@${remoteHost} '"cd ${remoteDir} && sudo git fetch && sudo git pull"'
+                   ssh -o StrictHostKeyChecking=no -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com "cd ~/repo/backend && sudo git fetch && sudo git pull"
                    """
                 }
 
