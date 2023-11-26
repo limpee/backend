@@ -14,16 +14,6 @@ pipeline {
 
         }
 
-        stage('Move to keys directory') {
-
-            steps {
-
-                sh "cd /home/ec2-user/keys"
-
-            }
-
-        }
-
         stage('Grant key permission') {
 
             steps {
@@ -39,6 +29,16 @@ pipeline {
             steps {
 
                 sh "ssh -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com"
+
+            }
+
+        }
+
+        stage('Change to repository directory') {
+
+            steps {
+
+                sh "cd /home/ec2-user/repo/backend"
 
             }
 
