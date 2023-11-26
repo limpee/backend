@@ -10,8 +10,6 @@ pipeline {
 
                 echo "Teste de Hello Wordl!"
 
-                sh "git"
-
             }
 
         }
