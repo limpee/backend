@@ -1,61 +1,28 @@
 pipeline {
-
     agent any
 
-    stages {
-
-        stage('Checkout') {
-
-            steps {
-
-                echo "Teste de Hello Wordl!"
-
-            }
-
-        }
-
-        stage('Construção') {
-
-            steps {
-
-                echo "Teste de Hello Wordl!"
-
-            }
-
-        }
-
-        stage('Deploy Homologação') {
-
-            steps {
-
-                echo "Teste de Hello Wordl!"
-
-            }
-
-        }
-
-        stage('Testes de Stress') {
-
-        steps {
-
-            echo "Teste de Hello Wordl!"
-
-            sh "jmeter -n -t Teste Frontend.jmx -l /tmp/log.txt -e -o /tmp/report.txt"
-
-        }
-
-        }
-
-        stage('Deploy Produção') {
-
-            steps {
-
-                echo "Teste de Hello Wordl!"
-
-            }
-
-        }
-
+    environment {
+        SSH_KEY = credentials('backend-key.pem') // Substitua 'your-ssh-key-id' pelo ID real das suas credenciais SSH
+        REMOTE_SERVER = 'ec2-3-214-52-91.compute-1.amazonaws.com'
+        SSH_USER = 'ec2-user'
     }
 
+    stages {
+        stage('SSH and Git Commands') {
+            steps {
+                script {
+                    // Configuração de SSH
+                    withCredentials([sshUserPrivateKey(credentialsId: SSH_KEY, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                        sh """
+                            cd /home/ec2-user/keys
+                            ssh -i \${SSH_PRIVATE_KEY} \${SSH_USER}@\${REMOTE_SERVER} 'yes'
+                            cd /home/ec2-user/repo/backend
+                            sudo git fetch
+                            sudo git pull
+                        """
+                    }
+                }
+            }
+        }
+    }
 }
