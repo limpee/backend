@@ -10,10 +10,6 @@ pipeline {
 
                 echo "Teste de Hello Wordl!"
 
-                sh "git "
-
-
-
             }
 
         }
@@ -23,8 +19,6 @@ pipeline {
             steps {
 
                 echo "Teste de Hello Wordl!"
-
-        
 
             }
 
