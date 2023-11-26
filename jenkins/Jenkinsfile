@@ -1,24 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        SSH_KEY = credentials('backend-key.pem') // Substitua 'your-ssh-key-id' pelo ID real das suas credenciais SSH
-        REMOTE_SERVER = 'ec2-3-214-52-91.compute-1.amazonaws.com'
-        SSH_USER = 'ec2-user'
-    }
-
     stages {
         stage('GIT TESTE') {
             steps {
                 script {
-                    // Configuração de SSH
-                    withCredentials([sshUserPrivateKey(credentialsId: SSH_KEY, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                        // Seu script de SSH vai aqui
-                        sh """
-                            cd /home/ec2-user/keys
-                            ssh -i \${SSH_PRIVATE_KEY} \${SSH_USER}@\${REMOTE_SERVER} 'cd /home/ec2-user/repo/backend && sudo git fetch && sudo git pull'
-                        """
-                    }
+                    sh 'cd /home/ec2-user/keys'
+                    sh 'ssh -i "backend-key.pem" ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com'
+                    sh 'cd /home/ec2-user/repo/backend'
+                    sh 'sudo git fetch'
+                    sh 'sudo git pull'
                 }
             }
         }
