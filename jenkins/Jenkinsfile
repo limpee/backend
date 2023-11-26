@@ -24,6 +24,16 @@ pipeline {
 
         }
 
+        stage('Access backend EC2') {
+
+            steps {
+
+                sh "ssh -i \"backend-key.pem\" ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com"
+
+            }
+
+        }
+
     }
 
 }
