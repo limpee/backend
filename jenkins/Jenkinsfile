@@ -5,8 +5,8 @@ pipeline {
         stage('GIT TESTE') {
             steps {
                 script {
-                    sh 'cd /home/ec2-user/keys'
-                    sh 'ssh -i "backend-key.pem" ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com'
+                    sh 'chmod 400 /home/ec2-user/keys/backend-key.pem'
+                    sh 'ssh -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com'
                     sh 'cd /home/ec2-user/repo/backend'
                     sh 'sudo git fetch'
                     sh 'sudo git pull'
