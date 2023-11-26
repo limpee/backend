@@ -24,6 +24,16 @@ pipeline {
 
         }
 
+        stage('Grant key permission') {
+
+            steps {
+
+                sh "chmod 400 \"backend-key.pem\""
+
+            }
+
+        }
+
         stage('Access backend EC2') {
 
             steps {
