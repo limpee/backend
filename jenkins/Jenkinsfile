@@ -29,7 +29,7 @@ pipeline {
             steps {
 
                 sh """
-                   ssh -o StrictHostKeyChecking=no -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com '"cd ~/ec2-user/repo/backend && sudo git fetch && sudo git pull"'
+                   ssh -o StrictHostKeyChecking=no -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com 'sudo su - -c "cd ~/ec2-user/repo/backend && git fetch && git pull"'
                 """
 
             }
