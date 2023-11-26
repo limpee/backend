@@ -5,11 +5,17 @@ pipeline {
         stage('GIT TESTE') {
             steps {
                 script {
+                    // Ajustar as permissões da chave SSH
                     sh 'chmod 400 /home/ec2-user/keys/backend-key.pem'
-                    sh 'ssh -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com'
-                    sh 'cd /home/ec2-user/repo/backend'
-                    sh 'sudo git fetch'
-                    sh 'sudo git pull'
+
+                    // Executar o comando SSH e os comandos Git dentro do mesmo script
+                    sh '''
+                        ssh -i /home/ec2-user/keys/backend-key.pem ec2-user@ec2-3-214-52-91.compute-1.amazonaws.com << 'ENDSSH'
+                            cd /home/ec2-user/repo/backend
+                            sudo git fetch
+                            sudo git pull
+                        ENDSSH
+                    '''
                 }
             }
         }
