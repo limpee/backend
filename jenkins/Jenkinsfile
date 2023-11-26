@@ -16,10 +16,7 @@ pipeline {
                         // Seu script de SSH vai aqui
                         sh """
                             cd /home/ec2-user/keys
-                            ssh -i \${SSH_PRIVATE_KEY} \${SSH_USER}@\${REMOTE_SERVER}
-                            cd /home/ec2-user/repo/backend
-                            sudo git fetch
-                            sudo git pull
+                            ssh -i \${SSH_PRIVATE_KEY} \${SSH_USER}@\${REMOTE_SERVER} 'cd /home/ec2-user/repo/backend && sudo git fetch && sudo git pull'
                         """
                     }
                 }
