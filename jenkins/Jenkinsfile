@@ -11,15 +11,15 @@ pipeline {
         stage('SSH and Git Commands') {
             steps {
                 script {
-                    {
-                        """
-                            cd /home/ec2-user/keys
-                            ssh -i \${SSH_KEY} \${SSH_USER}@\${REMOTE_SERVER}
-                            cd /home/ec2-user/repo/backend
-                            sudo git fetch
-                            sudo git pull
-                        """
-                    }
+                    
+                    """
+                        cd /home/ec2-user/keys
+                        ssh -i \${SSH_KEY} \${SSH_USER}@\${REMOTE_SERVER}
+                        cd /home/ec2-user/repo/backend
+                        sudo git fetch
+                        sudo git pull
+                    """
+                    
                 }
             }
         }
