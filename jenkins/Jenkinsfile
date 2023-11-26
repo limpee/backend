@@ -14,6 +14,16 @@ pipeline {
 
         }
 
+        stage('Move to keys directory') {
+
+            steps {
+
+                sh "cd /home/ec2-user/keys"
+
+            }
+
+        }
+
     }
 
 }
